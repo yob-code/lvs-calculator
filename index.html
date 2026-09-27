@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f151c">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LVS計算機">
+<title>LVS計算機</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><h1>LVS計算機</h1></div>
+  <button type="button" class="btn ghost" id="btnSettings">設定</button>
+</header>
+<p class="notice" id="notice">計画初期の手計算補助ツールです。確認申請用の計算ではありません。</p>
+
+<div id="strip" class="strip v-invalid" role="status" aria-live="polite"></div>
+
+<main class="grid">
+  <div class="col-in">
+    <details class="panel panel-setup" id="panelBld" open aria-label="建物">
+      <summary>建物（ツーバイフォー）<span class="tag">最初に設定</span></summary>
+      <div id="panelBldBody"></div>
+    </details>
+    <section class="panel" id="panelRoom" aria-label="居室"></section>
+    <section class="panel" id="panelOpening" aria-label="開口"></section>
+    <section class="panel" id="panelBasis" aria-label="計算根拠"></section>
+  </div>
+  <div class="col-out">
+    <section class="panel" id="panelSvg" aria-label="断面イメージ">
+      <div class="svg-head"><h2 id="svgTitle">断面イメージ</h2><span>境界線・軒先・窓はドラッグで動かせます（窓はダブルタップで幅を編集）</span></div>
+      <div class="svgbox" id="svgBox"></div>
+      <div class="legend">
+        <span><i style="background:#5ac8e6"></i>窓</span>
+        <span><i style="background:#ff7d7d"></i>境界</span>
+        <span><i style="background:#7fdc95"></i>採光の検討線（d・h）</span>
+        <span><i style="background:#e8c66a"></i>寸法</span>
+      </div>
+    </section>
+  </div>
+</main>
+
+<nav class="modebar" id="modeBar" aria-label="機能"></nav>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true">
+  <div class="sheet-panel" id="sheetBody"></div>
+</div>
+<div id="toast" role="status" hidden></div>
+
+<script src="js/rules/daylight-rules.js"></script>
+<script src="js/rules/ventilation-rules.js"></script>
+<script src="js/rules/smoke-rules.js"></script>
+<script src="js/data/windows.js"></script>
+<script src="js/core/state.js"></script>
+<script src="js/core/daylight-calc.js"></script>
+<script src="js/core/simple-calc.js"></script>
+<script src="js/ui/section-svg.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
