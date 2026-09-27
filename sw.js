@@ -4,7 +4,7 @@
  * - activate で旧バージョンのキャッシュを削除
  * - 取得は「ネットワーク優先、失敗時キャッシュ」。オンラインなら起動のたびに最新を取得、オフラインでもキャッシュで動作
  */
-const VERSION = 'lighting-v15';
+const VERSION = 'lighting-v17';
 
 const PRECACHE = [
   './',

@@ -99,13 +99,17 @@ h4 { font-size: 13px; margin: 0 0 8px; font-weight: 700; color: var(--cyan); }
   .grid { display: flex; align-items: flex-start; gap: 24px; max-width: 1200px; margin: 0 auto; padding: 16px 24px; }
   .col-in, .col-out { display: block; }
   .col-in { flex: 1 1 340px; max-width: 380px; min-width: 300px; }
-  .col-out {
-    flex: 1 1 620px; max-width: 700px; min-width: 320px;
-    position: sticky; top: var(--topbar-h, 104px); align-self: flex-start;
+  /* .col-out はレイアウト上の余白確保だけの役目（中身は #panelSvg を fixed で重ねる） */
+  .col-out { flex: 1 1 620px; max-width: 700px; min-width: 320px; }
+  #panelSvg {
+    display: flex; flex-direction: column;
+    position: fixed; z-index: 15;
+    top: var(--topbar-h, 104px);
+    left: var(--diagram-left, auto);
+    width: var(--diagram-w, auto);
     max-height: calc(100vh - var(--topbar-h, 104px) - 16px);
-    transform: translateZ(0);                 /* Chromeでのスティッキー描画のちらつき対策 */
+    max-height: calc(100dvh - var(--topbar-h, 104px) - 16px);
   }
-  #panelSvg { display: flex; flex-direction: column; max-height: 100%; }
   .svgbox {
     flex: 1 1 auto; min-height: 0;
     display: flex; align-items: center; justify-content: center;

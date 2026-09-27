@@ -698,4 +698,21 @@
     new ResizeObserver(syncTopbarH).observe(topbarEl);
     syncTopbarH();
   }
+
+  /* 断面図パネル(#panelSvg)は position:fixed で画面に完全固定し、スクロールに追従させない
+   * （position:sticky はブラウザのスクロール再計算に依存するため、環境によって微妙にジッターすることがある）。
+   * 左端・幅は .col-out（レイアウト上の余白確保用の空き領域）の実測値をリサイズ時にだけ反映し、
+   * スクロール中は一切再計算しない。 */
+  const colOutEl = $('.col-out');
+  if (colOutEl) {
+    const syncDiagramRect = () => {
+      if (!window.matchMedia('(min-width: 640px)').matches) return;
+      const r = colOutEl.getBoundingClientRect();
+      document.documentElement.style.setProperty('--diagram-left', `${r.left}px`);
+      document.documentElement.style.setProperty('--diagram-w', `${r.width}px`);
+    };
+    syncDiagramRect();
+    window.addEventListener('resize', syncDiagramRect);
+    if ('ResizeObserver' in window) new ResizeObserver(syncDiagramRect).observe($('.col-in') || document.body);
+  }
 })(window.LC = window.LC || {});
