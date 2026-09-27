@@ -137,7 +137,7 @@
     if (!rw) return `<div class="wcard empty">幅・高さを入力すると、面積が表示されます</div>`;
     const t = LC.windows.find(op.winType);
     return `<div class="wcard">
-      <div class="wimg">${LC.windows.icon(rw.w, rw.h, 56)}</div>
+      <div class="wimg">${LC.windows.icon(rw.w, rw.h, 56, op.winType)}</div>
       <div class="winfo">
         <div class="wtitle"><b>W${mm(rw.w)} × H${mm(rw.h)}</b> ${esc(t.label)}</div>
         <div class="weff">面積 <b>${f(rw.w / 1000, 2)} × ${f(rw.h / 1000, 2)} = ${f(rw.area, 2)}㎡</b></div>
@@ -689,4 +689,13 @@
   renderTabs();
   renderAll();
   registerSW();
+
+  /* PC/横画面レイアウトで右カラムの固定位置(top)を、実際のヘッダー高さに追随させる
+   * （注記文が2行/3行に変わっても右の断面図パネルと重ならないように） */
+  const topbarEl = $('.topbar');
+  if (topbarEl && 'ResizeObserver' in window) {
+    const syncTopbarH = () => document.documentElement.style.setProperty('--topbar-h', `${topbarEl.offsetHeight}px`);
+    new ResizeObserver(syncTopbarH).observe(topbarEl);
+    syncTopbarH();
+  }
 })(window.LC = window.LC || {});

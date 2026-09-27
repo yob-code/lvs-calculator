@@ -17,6 +17,7 @@
 </head>
 <body>
 
+<div class="topbar">
 <header class="top">
   <div class="brand"><h1>LVS計算機</h1></div>
   <button type="button" class="btn ghost" id="btnSettings">設定</button>
@@ -24,11 +25,12 @@
 <p class="notice" id="notice">計画初期の手計算補助ツールです。確認申請用の計算ではありません。</p>
 
 <div id="strip" class="strip v-invalid" role="status" aria-live="polite"></div>
+</div>
 
 <main class="grid">
   <div class="col-in">
     <details class="panel panel-setup" id="panelBld" open aria-label="建物">
-      <summary>建物（ツーバイフォー）<span class="tag">最初に設定</span></summary>
+      <summary>建物<span class="tag">最初に設定</span></summary>
       <div id="panelBldBody"></div>
     </details>
     <section class="panel" id="panelRoom" aria-label="居室"></section>

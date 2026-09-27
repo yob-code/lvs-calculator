@@ -135,21 +135,26 @@
       }
     }
 
-    /* --- 排煙：天井から800mm有効範囲（排煙モードのみ） --- */
+    /* --- 排煙：天井から800mm有効範囲（排煙モードのみ） ---
+     * 部屋の中に文字を詰め込むと他のラベルと重なるため、
+     * 天井ライン・800mmの寸法は左の余白（軒高寸法と同じ列）に出す。線は横の点線2本のみ。 */
     if (rw && state.mode === 'smoke') {
       const group = LC.group(g.lv.floors[g.floor - 1].ceilingGroup);
       const ceilingLocal = group.ceiling;                    // FL基準の天井高さ(mm)
       const zoneTop = ceilingLocal, zoneBottom = ceilingLocal - 800;
-      const yzt = Y(FL + zoneTop), yzb = Y(FL + zoneBottom);
-      o.push(`<rect x="${X(-150) - 10}" y="${yzt}" width="${150 * s + 20}" height="${yzb - yzt}" fill="none" stroke="${C.dim}" stroke-width="1.5" stroke-dasharray="4 4" pointer-events="none"/>`);
-      o.push(T(X(-150) - 16, yzt + 4, `天井 −800㎜ライン`, { c: C.dim, a: 'end', z: 21 }));
+      const zTopGL = FL + zoneTop, zBotGL = FL + zoneBottom;
+      const lx1 = X(-Bd), lx2 = X(0);
+      o.push(L(lx1, Y(zTopGL), lx2, Y(zTopGL), C.dim, 1.3, '2 3'));
+      o.push(L(lx1, Y(zBotGL), lx2, Y(zBotGL), C.dim, 1.3, '2 3'));
+      o.push(dimV(-Bd - 700, zBotGL, zTopGL, '800', C.dim, -1));
+
       const ovTop = Math.min(g.headFL, zoneTop), ovBottom = Math.max(sill, zoneBottom);
       if (ovTop > ovBottom) {
         const yOvTop = Y(FL + ovTop), yOvBottom = Y(FL + ovBottom);
         o.push(`<rect x="${X(-150)}" y="${yOvTop}" width="${150 * s}" height="${yOvBottom - yOvTop}" fill="${C.light}" fill-opacity=".6" pointer-events="none"/>`);
-        o.push(T(X(-150) + 160, (yOvTop + yOvBottom) / 2 + 5, `排煙有効高 ${mm(ovTop - ovBottom)}㎜`, { c: C.light, a: 'start', z: 22, w: 700 }));
+        o.push(T(X(0) + 14, (yOvTop + yOvBottom) / 2 + 5, `排煙有効高 ${mm(ovTop - ovBottom)}㎜`, { c: C.light, a: 'start', z: 20, w: 700 }));
       } else {
-        o.push(T(X(-150) + 160, Y(FL + g.headFL) + 18, '窓が天井-800㎜より下：排煙上有効な部分なし', { c: C.bound, a: 'start', z: 22, w: 700 }));
+        o.push(T(X(0) + 14, Y(FL + g.headFL) + 18, '有効範囲外（窓が天井-800㎜より下）', { c: C.bound, a: 'start', z: 17, w: 700 }));
       }
     }
 
