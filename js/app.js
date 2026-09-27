@@ -150,7 +150,7 @@
     const op = activeOp();
     const n = state.bld.storeys;
     const tabs = state.openings.map(o =>
-      `<button type="button" class="chip ${o.id === op.id ? 'on' : ''}" data-tab="${o.id}">${esc(o.name || '開口')}</button>`).join('') +
+      `<button type="button" class="chip ${o.id === op.id ? 'on' : ''}" data-tab="${o.id}">${esc(o.name || '開口')}（${o.floor || 1}F）</button>`).join('') +
       `<button type="button" class="chip add" id="btnAddOpening" aria-label="開口を追加">＋ 開口を追加（窓を増やす）</button>`;
     const bts = Object.entries(R().boundaryTypes).map(([k, b]) => [k, b.label]);
     const types = LC.windows.types();

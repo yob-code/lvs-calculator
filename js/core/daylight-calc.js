@@ -135,6 +135,10 @@
     res.neededCoef = res.totalOpening > 0 ? res.required / res.totalOpening : NaN;
 
     if (res.openings.some(o => o.errors.length)) res.warnings.push('入力が不足している開口があります（結果には含めていません）');
+    const floorsUsed = new Set(okOpenings.map(o => o.g.floor));
+    if (floorsUsed.size > 1) {
+      res.warnings.push(`開口の「窓のある階」が揃っていません（${[...floorsUsed].sort().join('F・')}Fが混在）。同じ居室の開口として合算する場合は階を揃えてください`);
+    }
     if (!okOpenings.length) return res;
 
     const thr = num(state.settings.cautionPct);
